@@ -1,0 +1,41 @@
+The program keeps track of who can possibly have certain cards (e.g. player 1 suggests White, Hall, Pipe and player 4 disproves it, player 2 and 3 cannot have White, Hall, Pipe). It will use those facts to try to deduce cards in other player's hand and what cards are in envelope. Essentially there's a 2 dimensonal table keeping track of who can possibly have what cards. Ticking off coresponding cells when you made suggestions/other makes suggestion. Then the program uses the table to potentially deduct who has what cards (e.g. we know Pipe and Hall is not in player 5's hand, he disproved player 3's suggestion of Pipe, Hall, White, then player 5 must have White in his hand). There are really 3 main rules:
+- when another player X makes a suggestion and is disproved by player Y, and we know 2 of the cards are not in Y's hand, then Y must have the remaining card
+- we also keep track of any suggestions made by other player from the beginning, which is used by the above rule in the future when we get more information
+- if a card cannot be in any player's hand, it must be in the envelope
+- if a player has 6 cards in their hand, we know 2 of them, and we know there are only 4 cards remaining that he can have, he must have those 4 cards
+
+Suggestion will go for items that will delete as much entries in the table as possible (i.e. the most 'unknown' card) to get as much information as possible. If we know one of the card in the envelope (e.g. the weapon is pipe), the program will prioritize suggestion of pipe or the weapons in your hand to guaranteed u can get useful information from the other 2 types.
+
+
+Documentation:
+There are 5 prolog commands to the program. Typing 's.' or 'm' (etc.) once the source file has been loaded to run the commands.
+
+startNewGame (shorthand s): start a new game. Any informations about the previous game are deleted. The following information will be asked in the given order: 
+- What weapons and rooms are used in this version of the game.
+- The number of players in the game.
+- The players in the game and the number of cards each player has. The players should be entered in the following order: starting from yourself, then the player to your left, then the player to the player to your left... In other words, starting from yourself, enter the players in clockwise order.
+- The cards in your hand.
+
+madeSuggestion (shorthand m): when you made a suggestion, use this command to record your suggestion and the result of the suggestion. If the program deduce which 3 cards are in the envelope, it will tell you the cards in the envelope (for you to make an accusation next turn). The following information will be asked in the given order:
+- What room you suggested.
+- What weapon you suggested.
+- What suspect you suggested.
+- Who showed you a card. Enter 'none' if no one disprove your suggestion.
+- And if a card is shown, which card is it.
+
+otherSuggestion (shorthand o): when another player makes a suggestion, use this command to record the suggestion and the result of the suggestion. If the program deduce which 3 cards are in the envelope, it will tell you the cards in the envelope (for you to make an accusation next turn). The following information will be asked in the given order:
+- What room is suggested.
+- What weapon is suggested.
+- What suspect is suggested.
+- Who showed the suggesting player a card. Enter 'none' if no one disprove the suggesting player's suggestion.
+- And if someone disproved the suggestion, who was it?
+
+displayNotebook (shorthand d): display all the information we currently have. The following information are shown:
+- Which room can be in the envelope. If only one card is shown, it's definitely in the envelope.
+- Which weapon can be in the envelope. If only one card is shown, it's definitely in the envelope.
+- Which suspect can be in the envelope. If only one card is shown, it's definitely in the envelope.
+- What cards are in which player's hand.
+- What cards each player can possibly still have. (TODO).
+
+cheatSuggestion (shorthand c): ask for some suggestions to made. Note that since the program have no idea which rooms are close to each other, the program may given multiple suggestions that it thinks have equal value and you can choose the one you can made (depending on distance to room). If the program knows which 3 cards are in the envelope it will tell you to make an accusation instead.
+
