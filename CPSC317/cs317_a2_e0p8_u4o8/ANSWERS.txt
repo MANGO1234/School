@@ -1,0 +1,103 @@
+=== Observed behaviour ===
+
+Describe in general words the observed behaviour of each of these servers and 
+how it affects the video playback experience. Then explain what you believe is
+happening and what is causing the described behaviour.
+
+* FUNKY A
+The videos seem to stutter when being played on this server and there are slight skipping
+of frames when watching the video. This could be caused by packets being lost because it 
+seems that frames are being skipped. 
+
+* FUNKY B
+The playback of the videos on the server are very choppy and many frames are skipped
+which has a negative impact on the video playback experience. This could be caused by
+packets being lost because it seems like many frames are being skipped. 
+
+* FUNKY C
+The videos on this server seem to be occasionally playing frames in the wrong order and
+some frames are played sooner than they should. This could be caused by frames 
+arriving in the wrong order and the client doesn't do any reordering, resulting in the
+behaviour seen.
+
+* FUNKY D
+The videos seem to be choppy and there also seems to be some frames out of order. 
+The choppy video can be cause by an unsteady frame rate which is caused by packets being 
+sent inconsistently. There also seem to be many out of order frames in the video playback.
+
+* FUNKY E
+This server plays the videos extremely fast which makes the video very hard to watch.
+The reason the video is being played so fast could be caused by the fact that the server
+is sending the packets too fast.
+
+* FUNKY F
+This server plays the video at a slower rate than normal which makes the video difficult 
+to watch. This is caused by the server sending the packets at a slow but consistent rate.
+
+* FUNKY G
+This server plays the videos at a slower rate and is also choppy. This can be cause by the 
+server sending the packets at a slower than usual rate and packet loss from the server.
+
+* FUNKY H
+The video seems to be choppy and once it starts playing again it speeds up to try and catch up.
+This could be caused by the server sending the packets at an uneven rate because there are times
+the video playback is choppy and slow and there are times it is very fast.
+
+
+=== Statistics ===
+
+You may add additional columns with more relevant data.
+
+FUNKY SERVER | FRAME RATE | PACKET LOSS RATE | OUT OF ORDER
+             | (pkts/sec) | (lost pkts/sec)  | (/sec)
+-------------+------------+------------------+-------------
+     A       |   22.89    |       2.30       |     0
+     B       |   14.73    |      10.22       |     0
+     C       |   25.05    |          0       |     4.40
+     D       |   12.72    |      12.02       |     3.13
+     E       |   50.20    |      49.55       |     0
+     F       |   10.02    |          0       |     0
+     G       |    7.81    |       1.96       |     0
+     H       |   21.69    |       3.10       |     0
+
+A packet is considered out of order if it arrived later than a packet with higher sequence number.
+A manual inspection of the sequence number being recieved were also employed.
+
+=== Result of analysis ===
+
+Explain in a few words what you believe is actually happening based on the statistics above.
+
+* FUNKY A
+Based on the statistics, I believe that the stuttering that occurs in funky A is caused by frames being
+skipped from packet loss.
+
+* FUNKY B
+The choppiness in funky B is caused by the large amount of packet loss that occurs on this server.
+This causes a large amount of frames to be skipped.
+
+* FUNKY C
+In funky C it appears that the movie is skipping back and forth because there are frames out of order
+and that would cause some frames to be played before they should be.
+
+* FUNKY D
+Funky D has both packet loss and out of order packets so it appears that video is both choppy and 
+skipping back and forth. The packet loss is causing the choppiness and the out of order packets are
+causing the skipping.
+
+* FUNKY E
+Funky E has a very high frame rate and packet loss rate which resulted in a very short movie that also 
+appeared to play very quickly. I think the packet loss is not that obvious because of the high frame
+rate. (while coding for part B, we learned the packet loss is actually caused by the client not reading 
+the frames sent by the server fast enough).
+
+* FUNKY F
+Funky F has a very low frame rate which causes the movie to appear to be in slow motion. It does not
+have any packet loss or out of order frames.
+
+* FUNKY G
+Funky G has a very low frame rate combined with packet loss so it appears that the movie is playing
+in slow motion and is missing some frames.
+
+* FUNKY H
+Funky H has some packet loss. Its frame rate should be good enough for viewing. However, from observation
+it can be seen that the frama rate is inconsistent. Sometimes it is too fast and sometimes it is too slow.
