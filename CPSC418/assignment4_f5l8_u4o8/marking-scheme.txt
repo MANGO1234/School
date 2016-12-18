@@ -1,0 +1,103 @@
+Total before late penalty: [100/100]
+---------------------------------------------------
+
+Correct serializable key-value consistency semantics at all times,
+including during multiple concurrent operations.                 [35/35]
+
+- [stable node set with C=10 (concurrent), N <= R, no failures] All
+  clients act on independent keys; semantics preserved. [7/7]
+
+- [stable node set with C=10 (concurrent), N > R, no failures] All
+  clients act on independent keys; semantics preserved. [8/8]
+
+- [stable node set with C=10 (concurrent), N <= R, no failures] 9/10
+  clients act on a single keys attempting to add their ID to the key
+  using get/testset (membership key); 1/10 client reads key to check
+  consistency. [20/20]
+
+
+Correct re-replication across kv nodes.                          [35/35]
+
+- [stable node set with C=1, N <= R, no failures] All client operation
+  are available; get-r(k) returns valid [r_1, ..., r_N] for all k
+  (after a put(k)). [5/5]
+
+- [stable node set with C=1, N > R, no failures] All client operation
+  are available; get-r(k) returns valid [r_1, ..., r_R] for all k
+  (after a put(k)). [5/5]
+
+- [changing node set with C=1, N=3R] put(k,v), then repeat the
+  following steps N-1 times: {get-r(k), kill(r_i), wait, test
+  avail(k,v)}. [5/5]
+
+- [changing node set with C=1, N=3R] put(k,v), then repeat the
+  following steps 3 times: {kill-R-1-for(k), wait, test
+  avail(k,v)}. [5/5]
+
+- [kv node restarts with C=1, N=2R] put(k,v), get-r(k), and kill an
+  r_i that replicates k, wait. Restart r_i, wait. Check that get-r(k)
+  does not include r_i. [5/5]
+
+- [kv node restarts with C=1, N=2R] put(k,v), assume get-r(k) returns
+  r_1...r_{R}. Kill r_1...r_{R-1}. Wait. Restart killed kv nodes,
+  wait. Check that get-r(k) does not include r_1...r_{R-1}. [5/5]
+
+- [joining kv nodes with C=1, R=5, N=1] put(k,v). Check get-r(k)
+  returns [r_0]. Join r_1, wait. Check get-r(k) returns [r_0, r_1]. Do
+  repeatedly until get-r(k) returns [r_0...r_4] and N > R. [5/5]
+
+
+Correct unavailability semantics.                                [20/20]
+
+- [stable node set with C=1, N=0, no failures] All client operation
+  are unavailable; get-r(k) returns the empty string for all k. [5/5]
+
+- Operation without failure with a single client, N=0. [5/5]
+
+- [changing node set with C=1, N=3R] put(k,v), then kill-R-for(k),
+  wait, and check k unavailable and get-r(k) returns empty string. [5/5]
+
+- [kv node restarts with C=1, N=R+1] put(k,v),
+  kill-R-for(k). Wait. Restart killed R kv nodes, wait. Check that k
+  is unavailable and get-r(k) returns empty string. [5/5]
+
+- [joining kv nodes with C=1] Start with no kv nodes. Check get(k_0)
+  and put(k_1) are unavailable, get-r(k_0) and get-r(k_1 return empty
+  strings. Join r_0, wait. Check get(k_0) and put(k_1) are
+  unavailable, get-r(k_0) and get-r(k_1 return empty strings. [5/5]
+
+
+The writeup cogently describes the design and how it meets the
+requirements set out above.                                      [10/10]
+(includes bonus writeup mark)
+
+
+Extra credit total (on top of the 100% above)                    [0/25]
+---------------------------------------------------
+
+Key values and replica assignment correctly recovered after front-end
+restarts.  [0/10]
+
+- Start R kv nodes / put(k_0)...put(k_H) / wait / kill-front-end /
+  wait / restart-front-end / wait / reconnect client /
+  get(k_0)...get(k_H) / check recovered key values /
+  get-r(k_0)...get-r(k_H) / check recovered key replica assignments.
+
+
+Unavailability semantics are preserved after front-end
+restarts. [0/10]
+
+- Start R kv nodes / put(k_0)...put(k_H) / kill-R-of-k(k_i) / wait /
+  kill-front-end / wait / restart-front-end / wait / reconnect client
+  / get(k_0)...get(k_H) / check that only k_i unavailable
+
+The second page of the writeup cogently describes how your solution
+design supports a restartable front-end. [0/5]
+
+
+
+Points lost because you did not run gofmt.  [ 0/20]
+---------------------------------------------------
+
+All solutions must be formatted using gofmt; 20 point penalty for
+those that are not properly formatted.

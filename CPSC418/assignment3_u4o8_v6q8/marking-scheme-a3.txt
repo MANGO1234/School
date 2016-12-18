@@ -1,0 +1,63 @@
+Total before late penalty: [100/100]
+---------------------------------------------------
+
+Nodes join and election is carried out successfully (no unavailability).  [25/25]
+  - Clients join sequentially (election in between each join) [15/15]
+     Repeat 5 consecutive times:
+      - Client joins
+      - Wait for leader
+      - Check advertisements
+  - Clients join concurrently (election in between each batch of joins) [10/10]
+     Repeat 5 consecutive times:
+      - Multiple clients join concurrently
+      - Wait for leader
+      - Check advertisements
+
+Nodes fail and an election is carried out successfully (no unavailability).  [25/25]
+  - The leader node fails (election for new leader) [15/15]
+     Repeat 5 consecutive times:
+      - Clients join, leader is elected
+      - Leader node is killed (fails)
+      - Wait for leader
+      - Check advertisements
+  - A non-leader node fails (possible election) [10/10]
+     Repeat 5 consecutive times:
+      - Clients join, a leader is elected
+      - A non-leader node is killed (fails)
+      - Wait for leader
+      - Check advertisements
+
+Restarts.  [10/10]
+  - A failed node is restarted/rejoins [5/5]
+     Repeat 2 consecutive times:
+      - Clients join, a leader is elected
+      - A non-leader node is killed (fails)
+      - Wait for leader
+      - Check advertisements
+      - The node is restarted and rejoins
+      - Wait for leader
+      - Check advertisements
+  - A failed leader is restarted/rejoins [5/5]
+     Repeat 2 consecutive times:
+      - Clients join, a leader is elected
+      - The leader node is killed (fails)
+      - Wait for leader
+      - Check advertisements
+      - The node is restarted and rejoins
+      - Wait for leader
+      - Check advertisements
+
+Unavailability.  [30/30]
+  - 10% unavailability during concurrent node joining [15/15]
+  - 10% unavailability when leader fails and election is triggered [10/10]
+  - One-off 100% unavailability [5/5]
+
+Write-up.  [10/10]
+
+
+Points lost because you did not run gofmt.  [ 0/20]
+---------------------------------------------------
+
+All solutions must be formatted using gofmt; 20 point penalty for
+those that are not properly formatted.
+

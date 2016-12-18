@@ -1,0 +1,21 @@
+Total before late penalty: [ 100/100]
+---------------------------------------------------
+
+Client retrieves the correct nonce from the aserver [25/25]
+
+Client properly computes and communicates the MD5 hash back to the
+aserver [25/25]
+
+Client properly communicates with aserver (retrieves the fserver
+IP:port and fortune nonce) [25/25]
+
+Client properly communicates with fserver to retrieve the fortune [25/25]
+
+
+
+Points lost because you did not run gofmt  [ 0/20]
+---------------------------------------------------
+
+All solutions must be formatted using gofmt; 20 point penalty for
+those that are not properly formatted.
+
